@@ -7,101 +7,145 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #fff;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            max-width: 600px;
-            margin: 50px auto;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-
-        form {
+        .search-bar {
             display: flex;
             justify-content: center;
-            margin-bottom: 20px;
+            margin: 40px 0;
         }
 
-        input[type="text"] {
-            width: 80%;
+        .search-bar input[type="text"] {
+            width: 60%;
             padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px 0 0 4px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px 0 0 24px;
+            outline: none;
         }
 
-        button {
-            padding: 10px;
-            border: none;
-            background: #007BFF;
-            color: #fff;
+        .search-bar button {
+            padding: 10px 20px;
+            border: 1px solid #dfe1e5;
+            border-left: none;
+            background-color: #f8f9fa;
+            border-radius: 0 24px 24px 0;
             cursor: pointer;
-            border-radius: 0 4px 4px 0;
         }
 
-        button:hover {
-            background: #0056b3;
+        .search-bar button:hover {
+            background-color: #e8e8e8;
         }
 
-        ul {
+        .results {
+            margin-top: 20px;
+        }
+
+        .results ul {
             list-style: none;
             padding: 0;
         }
 
-        li {
-            background: #f9f9f9;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 4px;
+        .results li {
+            border-bottom: 1px solid #ebebeb;
+            padding: 20px 0;
         }
 
-        li h2 {
+        .results h2 {
             margin: 0;
-            color: #333;
+            font-size: 18px;
+            color: #1a0dab;
         }
 
-        li p {
-            margin: 5px 0 0;
-            color: #666;
+        .results p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #545454;
         }
 
-        a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #007BFF;
+        .results a {
             text-decoration: none;
+            color: #1a0dab;
         }
 
-        a:hover {
+        .results a:hover {
             text-decoration: underline;
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 18px;
+            color: #545454;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Search Engine</h1>
-        <form id="search-form">
-            <input type="text" id="query" placeholder="Enter search query...">
-            <button type="submit">Search</button>
-        </form>
-        <div id="results"></div>
+        <div class="search-bar">
+            <form id="search-form">
+                <input type="text" id="query" placeholder="Enter search query...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div id="results" class="results"></div>
     </div>
     <script>
         const data = [
-            {"title": "Flask Tutorial", "content": "Learn Flask for web development."},
-            {"title": "Python Basics", "content": "Introduction to Python programming."},
-            {"title": "HTML and CSS", "content": "Basics of web design with HTML and CSS."},
-            {"title": "JavaScript Guide", "content": "Learn JavaScript for interactive web pages."}
+            {"title": "Flask Tutorial", "content": "Learn Flask for web development.", "link": "https://flask.palletsprojects.com/"},
+            {"title": "Python Basics", "content": "Introduction to Python programming.", "link": "https://www.python.org/doc/essays/blurb/"},
+            {"title": "HTML and CSS", "content": "Basics of web design with HTML and CSS.", "link": "https://www.w3schools.com/html/"},
+            {"title": "JavaScript Guide", "content": "Learn JavaScript for interactive web pages.", "link": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"},
+            {"title": "React Tutorial", "content": "Learn React for building user interfaces.", "link": "https://reactjs.org/tutorial/tutorial.html"},
+            {"title": "Node.js Guide", "content": "Introduction to backend development with Node.js.", "link": "https://nodejs.org/en/docs/guides/"},
+            {"title": "Django Framework", "content": "Learn Django for web development.", "link": "https://www.djangoproject.com/start/"},
+            {"title": "Data Science with Python", "content": "Explore data science using Python.", "link": "https://www.datacamp.com/community/tutorials/data-science-python"},
+            {"title": "Machine Learning Basics", "content": "Introduction to machine learning concepts.", "link": "https://www.coursera.org/learn/machine-learning"},
+            {"title": "Artificial Intelligence", "content": "Learn about AI and its applications.", "link": "https://www.edx.org/learn/artificial-intelligence"},
+            {"title": "CSS Grid and Flexbox", "content": "Advanced layout techniques with CSS Grid and Flexbox.", "link": "https://css-tricks.com/snippets/css/complete-guide-grid/"},
+            {"title": "Bootstrap Framework", "content": "Learn Bootstrap for responsive web design.", "link": "https://getbootstrap.com/docs/5.0/getting-started/introduction/"},
+            {"title": "Vue.js Tutorial", "content": "Learn Vue.js for building interactive web applications.", "link": "https://vuejs.org/v2/guide/"},
+            {"title": "Angular Guide", "content": "Introduction to Angular framework.", "link": "https://angular.io/start"},
+            {"title": "SQL Basics", "content": "Learn the basics of SQL for database management.", "link": "https://www.w3schools.com/sql/"},
+            {"title": "MongoDB Guide", "content": "Introduction to MongoDB for NoSQL databases.", "link": "https://docs.mongodb.com/guides/"},
+            {"title": "RESTful APIs", "content": "Learn about designing and building RESTful APIs.", "link": "https://restfulapi.net/"},
+            {"title": "GraphQL Basics", "content": "Introduction to GraphQL for APIs.", "link": "https://graphql.org/learn/"},
+            {"title": "Docker Tutorial", "content": "Learn Docker for containerization.", "link": "https://www.docker.com/get-started"},
+            {"title": "Kubernetes Guide", "content": "Introduction to Kubernetes for container orchestration.", "link": "https://kubernetes.io/docs/tutorials/"},
+            {"title": "Cloud Computing", "content": "Learn about cloud computing and its services.", "link": "https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/"},
+            {"title": "AWS Basics", "content": "Introduction to Amazon Web Services.", "link": "https://aws.amazon.com/getting-started/"},
+            {"title": "Azure Guide", "content": "Learn about Microsoft Azure.", "link": "https://docs.microsoft.com/en-us/learn/azure/"},
+            {"title": "Google Cloud Platform", "content": "Introduction to Google Cloud Platform.", "link": "https://cloud.google.com/gcp/"},
+            {"title": "DevOps Practices", "content": "Learn about DevOps culture and practices.", "link": "https://www.atlassian.com/devops"},
+            {"title": "Agile Methodology", "content": "Introduction to Agile software development.", "link": "https://www.agilealliance.org/agile101/"},
+            {"title": "Cybersecurity Basics", "content": "Learn the basics of cybersecurity.", "link": "https://www.coursera.org/specializations/ibm-cyber-security-analyst"},
+            {"title": "Blockchain Technology", "content": "Introduction to blockchain and its applications.", "link": "https://www.ibm.com/topics/what-is-blockchain"},
+            {"title": "Cryptocurrency Guide", "content": "Learn about cryptocurrencies like Bitcoin and Ethereum.", "link": "https://www.coinbase.com/learn/crypto-basics"},
+            {"title": "Digital Marketing", "content": "Explore the basics of digital marketing.", "link": "https://mailchimp.com/marketing-glossary/digital-marketing/"},
+            {"title": "SEO Techniques", "content": "Learn about search engine optimization techniques.", "link": "https://moz.com/beginners-guide-to-seo"},
+            {"title": "Content Marketing", "content": "Introduction to content marketing strategies.", "link": "https://contentmarketinginstitute.com/what-is-content-marketing/"},
+            {"title": "Social Media Marketing", "content": "Learn about marketing on social media platforms.", "link": "https://www.hubspot.com/social-media-marketing"},
+            {"title": "Email Marketing", "content": "Introduction to email marketing strategies.", "link": "https://mailchimp.com/email-marketing/"},
+            {"title": "Google Analytics", "content": "Learn to use Google Analytics for tracking web traffic.", "link": "https://analytics.google.com/analytics/academy/"},
+            {"title": "E-commerce Development", "content": "Learn about building e-commerce websites.", "link": "https://www.shopify.com/learn/online/ecommerce-website-development"},
+            {"title": "WordPress Guide", "content": "Introduction to building websites with WordPress.", "link": "https://wordpress.org/support/article/new-to-wordpress-where-to-start/"},
+            {"title": "Web Performance Optimization", "content": "Learn techniques to optimize web performance.", "link": "https://developers.google.com/web/fundamentals/performance/"},
+            {"title": "User Experience Design", "content": "Explore the principles of user experience design.", "link": "https://www.usability.gov/what-and-why/user-experience.html"},
+            {"title": "Mobile App Development", "content": "Learn about developing mobile applications.", "link": "https://developer.android.com/guide"},
+            {"title": "Swift Programming", "content": "Introduction to Swift for iOS development.", "link": "https://developer.apple.com/swift/"},
+            {"title": "Kotlin Guide", "content": "Learn Kotlin for Android development.", "link": "https://kotlinlang.org/docs/home.html"},
+            {"title": "Cross-Platform Development", "content": "Introduction to cross-platform mobile development.", "link": "https://flutter.dev/"},
+            {"title": "Game Development Basics", "content": "Learn the basics of game development.", "link": "https://www.gamedev.net/start/"},
+            {"title": "Unity Engine", "content": "Introduction to game development with Unity.", "link": "https://unity.com/learn"},
+            {"title": "Unreal Engine Guide", "content": "Learn about game development with Unreal Engine.", "link": "https://www.unrealengine.com/en-US/onlinelearning-courses"},
+            {"title": "3D Modeling Basics", "content": "Learn the basics of 3D modeling for games and animations.", "link": "https://www.blender.org/support/tutorials/"}
         ];
 
         document.getElementById('search-form').addEventListener('submit', function(event) {
@@ -118,17 +162,21 @@
                 const ul = document.createElement('ul');
                 results.forEach(result => {
                     const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = result.link;
+                    a.target = "_blank";
                     const h2 = document.createElement('h2');
                     h2.textContent = result.title;
                     const p = document.createElement('p');
                     p.textContent = result.content;
-                    li.appendChild(h2);
+                    a.appendChild(h2);
+                    li.appendChild(a);
                     li.appendChild(p);
                     ul.appendChild(li);
                 });
                 resultsContainer.appendChild(ul);
             } else {
-                resultsContainer.innerHTML = `<p>No results found for "${query}".</p>`;
+                resultsContainer.innerHTML = `<p class="no-results">No results found for "${query}".</p>`;
             }
         }
     </script>
