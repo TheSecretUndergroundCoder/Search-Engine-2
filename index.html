@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Search Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+
+        button {
+            padding: 10px;
+            border: none;
+            background: #007BFF;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f9f9f9;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        li h2 {
+            margin: 0;
+            color: #333;
+        }
+
+        li p {
+            margin: 5px 0 0;
+            color: #666;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Search Engine</h1>
+        <form id="search-form">
+            <input type="text" id="query" placeholder="Enter search query...">
+            <button type="submit">Search</button>
+        </form>
+        <div id="results"></div>
+    </div>
+    <script>
+        const data = [
+            {"title": "Flask Tutorial", "content": "Learn Flask for web development."},
+            {"title": "Python Basics", "content": "Introduction to Python programming."},
+            {"title": "HTML and CSS", "content": "Basics of web design with HTML and CSS."},
+            {"title": "JavaScript Guide", "content": "Learn JavaScript for interactive web pages."}
+        ];
+
+        document.getElementById('search-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const query = document.getElementById('query').value.toLowerCase();
+            const results = data.filter(item => item.title.toLowerCase().includes(query) || item.content.toLowerCase().includes(query));
+            displayResults(results, query);
+        });
+
+        function displayResults(results, query) {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '';
+            if (results.length > 0) {
+                const ul = document.createElement('ul');
+                results.forEach(result => {
+                    const li = document.createElement('li');
+                    const h2 = document.createElement('h2');
+                    h2.textContent = result.title;
+                    const p = document.createElement('p');
+                    p.textContent = result.content;
+                    li.appendChild(h2);
+                    li.appendChild(p);
+                    ul.appendChild(li);
+                });
+                resultsContainer.appendChild(ul);
+            } else {
+                resultsContainer.innerHTML = `<p>No results found for "${query}".</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
